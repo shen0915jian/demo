@@ -1,6 +1,9 @@
 package com.chien;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,23 +21,21 @@ public class InvestApplication {
         SpringApplication.run(InvestApplication.class, args);
 
         try {
+
             FileInputStream busniessLoanStream = new FileInputStream(
-                    "/home/chien/github/demo/invest/src/main/resources/data/busniess_loan.txt");
+                    "/home/chien/code/github/demo/invest/src/main/resources/data/busniess_loan.txt");
             // Get the object of DataInputStream
             DataInputStream in = new DataInputStream(busniessLoanStream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
             // Read File Line By Line
             while ((strLine = br.readLine()) != null) {
-                // Print the content on the console
-                System.out.println(strLine);
                 String[] items = strLine.split(",");
-
+                    Loan newLoan=new Loan(LocalDate.parse(items[0].replace("/","-"), DateTimeFormatter.ISO_LOCAL_DATE),new BigDecimal(items[1]),new BigDecimal(items[2]),new BigDecimal(items[3]),new BigDecimal(items[4]),1);
+                    System.out.println(newLoan);
             }
             // Close the input stream
             busniessLoanStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

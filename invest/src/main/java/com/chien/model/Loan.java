@@ -1,6 +1,7 @@
 package com.chien.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  */
 public class Loan {
     // 还款日期
-    private Date repaymentDate;
+    private LocalDate repaymentDate;
     // 分期还款金额
     private BigDecimal installmentPayment;
     // 应还本金
@@ -21,7 +22,7 @@ public class Loan {
     // 1:商业;2:公积金
     private int type;
 
-    public Loan(Date repaymentDate, BigDecimal installmentPayment, BigDecimal principal, BigDecimal interestRate,
+    public Loan(LocalDate repaymentDate, BigDecimal installmentPayment, BigDecimal principal, BigDecimal interestRate,
             BigDecimal principalBalance, int type) {
         this.repaymentDate = repaymentDate;
         this.installmentPayment = installmentPayment;
@@ -31,7 +32,7 @@ public class Loan {
         this.type = type;
     }
 
-    public Date getRepaymentDate() {
+    public LocalDate getRepaymentDate() {
         return repaymentDate;
     }
 
@@ -70,9 +71,7 @@ public class Loan {
             return false;
         if (!principal.equals(loan.principal))
             return false;
-        if (!interestRate.equals(loan.interestRate))
-            return false;
-        return principalBalance.equals(loan.principalBalance);
+        return interestRate.equals(loan.interestRate) && principalBalance.equals(loan.principalBalance);
     }
 
     @Override
@@ -83,5 +82,17 @@ public class Loan {
         result = 31 * result + interestRate.hashCode();
         result = 31 * result + principalBalance.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "repaymentDate=" + repaymentDate +
+                ", installmentPayment=" + installmentPayment +
+                ", principal=" + principal +
+                ", interestRate=" + interestRate +
+                ", principalBalance=" + principalBalance +
+                ", type=" + type +
+                '}';
     }
 }
