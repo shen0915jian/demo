@@ -95,4 +95,8 @@ public class Loan {
                 ", type=" + type +
                 '}';
     }
+
+    public boolean isInTheYear(int year) {
+        return getRepaymentDate().getYear() == year;
+    }
 }

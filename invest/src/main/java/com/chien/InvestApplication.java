@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chien.util.FileToObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,30 +16,12 @@ import com.chien.model.Loan;
 @SpringBootApplication
 public class InvestApplication {
 
-    private List<Loan> loanList = new ArrayList<>();
-
+    private static List<Loan> loanList = new ArrayList<>();
+    private static String businessLoanPath="/home/chien/code/github/demo/invest/src/main/resources/data/busniess_loan.txt";
+    private static String housingProvidentFundPath="/home/chien/code/github/demo/invest/src/main/resources/data/housing_provident_fund_loans.txt";
     public static void main(String[] args) {
         SpringApplication.run(InvestApplication.class, args);
-
-        try {
-
-            FileInputStream busniessLoanStream = new FileInputStream(
-                    "/home/chien/code/github/demo/invest/src/main/resources/data/busniess_loan.txt");
-            // Get the object of DataInputStream
-            DataInputStream in = new DataInputStream(busniessLoanStream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String strLine;
-            // Read File Line By Line
-            while ((strLine = br.readLine()) != null) {
-                String[] items = strLine.split(",");
-                    Loan newLoan=new Loan(LocalDate.parse(items[0].replace("/","-"), DateTimeFormatter.ISO_LOCAL_DATE),new BigDecimal(items[1]),new BigDecimal(items[2]),new BigDecimal(items[3]),new BigDecimal(items[4]),1);
-                    System.out.println(newLoan);
-            }
-            // Close the input stream
-            busniessLoanStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        loanList.addAll(FileToObject.getLoanList(businessLoanPath,1));
+        loanList.addAll(FileToObject.getLoanList(housingProvidentFundPath,2));
     }
 }
