@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chien.model.LoanDetails;
 import com.chien.util.FileToObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,5 +24,8 @@ public class InvestApplication {
         SpringApplication.run(InvestApplication.class, args);
         loanList.addAll(FileToObject.getLoanList(businessLoanPath,1));
         loanList.addAll(FileToObject.getLoanList(housingProvidentFundPath,2));
+
+        LoanDetails.getInstance().init(loanList);
+        System.out.println(LoanDetails.getInstance().getInstallmentPaymentPerYear(2016));
     }
 }

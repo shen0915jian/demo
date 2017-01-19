@@ -33,7 +33,7 @@ public class FileToObject {
             while ((strLine = br.readLine()) != null) {
                 String[] items = strLine.split(",");
                 Loan newLoan = new Loan(LocalDate.parse(items[0].replace("/", "-"), DateTimeFormatter.ISO_LOCAL_DATE), new BigDecimal(items[1]), new BigDecimal(items[2]), new BigDecimal(items[3]), new BigDecimal(items[4]), type);
-                System.out.println(newLoan);
+                loans.add(newLoan);
             }
             // Close the input stream
             busniessLoanStream.close();
